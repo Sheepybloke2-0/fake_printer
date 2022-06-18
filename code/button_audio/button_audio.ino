@@ -110,6 +110,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println(input_seq_idx);
   if (musicPlayer.stopped()) {
     playing = false;
     if (fail_led) {
@@ -131,6 +132,16 @@ void loop() {
       FastLED.clear(true);
       FastLED.show();
     }
+  }
+
+  if (input_seq_idx == 3) {
+    ready_led = true;
+  } else if (input_seq_idx > 3) {
+    // Need to roll over to 1, since another tick has been added.
+    input_seq_idx = input_seq_idx % 3;
+    ready_led = false;
+  } else {
+    ready_led = false;
   }
 
   if (! ss.digitalRead(SWITCH1)) {
@@ -229,15 +240,6 @@ void loop() {
         success_led = true;
         playing = true;
       }
-  }
-
-  if (input_seq_idx == 3) {
-    ready_led = true;
-  } else if (input_seq_idx > 3) {
-    input_seq_idx = 0;
-    ready_led = false;
-  } else {
-    ready_led = false;
   }
 
   FastLED.delay(DELAY_MS);
