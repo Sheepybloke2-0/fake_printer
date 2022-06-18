@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+*.bin
+*.uf2
+
+*.flac
+*.wav
+*.aup3*
